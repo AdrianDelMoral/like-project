@@ -1,0 +1,39 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+article:first-child {
+  border-top: 1px solid #8bb;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 30rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+article:last-child {
+  border-bottom: 1px solid #8bb;
+  border-top: 1px solid #8bb;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 30rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+/* button {
+  border-color: #646cff;
+}
+button:hover {
+  border-color: #646cff;
+} */
+
+
+.tw-infoActions div {
+  border-top: 1px solid #8bb;
+}
