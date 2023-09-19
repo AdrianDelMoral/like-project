@@ -1,44 +1,67 @@
-import '../../styles/barActions.css'
-import { Like } from './Tweet/BarActions/Like'
-import { Comment } from './Tweet/BarActions/Comment'
-import { Retweet } from './Tweet/BarActions/Retweet'
-import { useTweets } from './TweetsContext'
-import React from 'react'
-
-import { InfoActions } from './Tweet/InfoActions'
+import '../styles/tweet.css'
+import React, { useState } from 'react'
+import { TweetInfo } from './TweetInfo'
+import { CommentButton } from './CommentButton'
+import { RetweetButton } from './RetweetButton'
+import { LikeButton } from './LikeButton'
 
 export function Tweet () {
-  const { tweets } = useTweets()
+  const [tweet, setTweet] = useState({
+    favorites: 12,
+    retweets: 2,
+    comments: 10,
+    isFav: true,
+    isRt: false
+  })
 
-  /* viste como llego, a ese set lo cambias por u */
+  const handleLike = () => {
+    if (tweet.isFav) {
+      // if already liked, then remove one like
+      setTweet({
+        ...tweet,
+        favorites: tweet.favorites - 1,
+        isFav: false
+      })
+    } else {
+      // if not liked, then add one like
+      setTweet({
+        ...tweet,
+        favorites: tweet.favorites + 1,
+        isFav: true
+      })
+    }
+  }
 
-  // console.log(tweets)
-  console.log(tweets)
+  const handleRetweet = () => {
+    if (tweet.isRt) {
+      // if already retweeted, then remove one retweet
+      setTweet({
+        ...tweet,
+        retweets: tweet.retweets - 1,
+        isRt: false
+      })
+    } else {
+      // if not retweeted, then add one retweet
+      setTweet({
+        ...tweet,
+        retweets: tweet.retweets + 1,
+        isRt: true
+      })
+    }
+  }
 
   return (
     <>
       <img src='../public/luffy-pic.webp' alt='' width='500px' height='500px' />
 
       <article className='tw-infoActions'>
-        {
-                    tweets.map(({ uuid, cantidadMg, cantidadRt }) => (
-                      <InfoActions key={uuid} initialIsMg={cantidadMg} initialIsRt={cantidadRt} />
-                    ))
-                }
+        <TweetInfo mg={tweet.favorites} rt={tweet.retweets} />
       </article>
 
       <article className='tw-barActions'>
-        <Comment />
-        {
-                    tweets.map(({ uuid, isRt, cantidadRt }) => (
-                      <Retweet key={uuid} initialIsRt={isRt} cantidadRt={cantidadRt} />
-                    ))
-                }
-        {
-                    tweets.map(({ uuid, isMg, cantidadMg }) => (
-                      <Like key={uuid} initialIsMg={isMg} cantidadMg={cantidadMg} />
-                    ))
-                }
+        <CommentButton />
+        <RetweetButton isRt={tweet.isRt} handleRetweet={handleRetweet} />
+        <LikeButton isMg={tweet.isFav} handleLike={handleLike} />
       </article>
     </>
   )
